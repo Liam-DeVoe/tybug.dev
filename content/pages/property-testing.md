@@ -6,6 +6,8 @@ page_css_class: pbt
 
 A curated list of property-based testing resources.
 
+This list is intended as a "seminal overview". If one were to read every linked resource, they would be a well-rounded property-based testing expert, with knowledge of all the important ideas.
+
 <div class="pbt__contents">
 <a href="#libraries">Libraries</a>
 <a href="#posts">Posts</a>
@@ -101,6 +103,7 @@ Can we do better than sampling test cases uniformly at random? Yes; this section
 
 - [Swarm Testing](https://users.cs.utah.edu/~regehr/papers/swarm12.pdf) and its corresponding blog post [Better Random Testing by Leaving Features Out](https://blog.regehr.org/archives/591) describes how randomly disabling a subset of the features in a program actually increases behavioral diversity and bug-finding power.
 - [Inputs from Hell: Generating Uncommon Inputs from Common Samples](https://arxiv.org/abs/1812.07525) observes that if you have a distribution of inputs over some grammar, you can invert the observed probabilities to generate inputs along rare grammar paths.
+- [Targeted Property-Based Testing](http://proper.softlab.ntua.gr/papers/issta2017.pdf) suggests that an ergonomic form of feedback to the search is to hill-climb toward increasing a developer-specified metric.
 
 ## Shrinking
 
@@ -117,7 +120,7 @@ Shrinking (also known as minimization or test-case reduction) takes a complex fa
 - [Hegel](https://hegel.dev/) is a family of PBT libraries built on a shared Hypothesis backend.
 - [Bombadil](https://github.com/antithesishq/bombadil) is a property-based testing library for web UIs and TUIs.
 - [Tyche](https://github.com/tyche-pbt/tyche-extension) is an observability tool for property-based testing. See also the paper [Tyche: Making Sense of Property-Based Testing Effectiveness](https://harrisongoldste.in/papers/uist24-tyche.pdf) and the [OpenPBTStats specification](https://hypothesis.readthedocs.io/en/latest/reference/integrations.html#observability).
-- [Schemathesis](https://github.com/schemathesis/schemathesis). Property-based testing for OpenAPI specs. See also the paper [Deriving Semantics-Aware Fuzzers from Web API Schemas](https://arxiv.org/pdf/2112.10328).
+- [Schemathesis](https://github.com/schemathesis/schemathesis) is a property-based testing library for OpenAPI specs. See also the paper [Deriving Semantics-Aware Fuzzers from Web API Schemas](https://arxiv.org/pdf/2112.10328).
 - [hypothesis-crosshair](https://github.com/pschanely/hypothesis-crosshair) is a concolic execution[^1] backend for Hypothesis, built on [Crosshair](https://github.com/pschanely/crosshair).
 <!-- - [HypoFuzz](https://github.com/Zac-HD/hypofuzz). Coverage-guided PBT for Hypothesis tests. -->
 <!-- - [DeepState](https://github.com/trailofbits/deepstate) is a framework for declaring C and C++ tests that can be run under multiple backends -->
