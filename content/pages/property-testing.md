@@ -117,6 +117,7 @@ Shrinking (also known as minimization or test-case reduction) takes a complex fa
 - [falsify: Internal Shrinking Reimagined for Haskell](https://well-typed.com/blog/aux/files/falsify.pdf) describes a Hypothesis-inspired internal shrinking algorithm that represents test cases as structured trees. See also [the blog post](https://well-typed.com/blog/2023/04/falsify/) and [the talk](https://www.youtube.com/watch?v=csKkTas6X58) by the same name.
 - [C-Reduce](https://github.com/csmith-project/creduce) is a shrinker for C and C++ programs. See also the paper [Test-Case Reduction for C Compiler Bugs](https://users.cs.utah.edu/~regehr/papers/pldi12-preprint.pdf) and the blog post [Design and Evolution of C-Reduce](https://blog.regehr.org/archives/1678).
 - [Shrinkray](https://github.com/DRMacIver/shrinkray) is a general-purpose shrinker that works over any file format.
+- [The Shrinking Challenge](https://github.com/jlink/shrinking-challenge) compares the shrinking performance of property-based testing frameworks on a common benchmark suite.
 
 ## Test synthesis
 
@@ -149,7 +150,7 @@ Datasets and research on how developers practically interact with property-based
 
 ## Other lists
 
-Not satisfied? Here are some additional lists of resources.
+Want to read more? Here are some additional lists of resources.
 
 - [Jan Midtgaard's PBT framework list](https://github.com/jmid/pbt-frameworks) contrasts various PBT frameworks.
 - [HypoFuzz's literature review](https://hypofuzz.com/docs/literature.html) focuses more on fuzzing, but may still be valuable.
