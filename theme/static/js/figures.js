@@ -284,10 +284,10 @@
   // filled contour of the density grid; the marginals are that grid collapsed
   // onto each axis (a Riemann sum over the other variable), so they stay the
   // true marginals even when `joint` is correlated.
-  // `marginals: false` hides the top/right strips but still *reserves* their layout
-  // space, so the center panel stays the same size and position as a marginal'd chart
-  // (the reserved right strip balances the y-axis gutter, keeping the panel centred —
-  // reclaiming the space instead would shove the panel rightward).
+  // `marginals: false` hides the top/right strips and reclaims their space, so the
+  // center panel grows to fill it. The y-axis gutter makes the left margin wider than
+  // the right, so a reclaimed square would `equal`-centre off toward the thin side;
+  // we mirror the (label-padded) left margin onto the right to keep it centred.
   function JointDensity({ x: px, y: py, joint, xDomain, yDomain } = {}, {
     width = 460, height = 380,
     margin = { top: 8, right: 8, bottom: 30, left: 38 },
@@ -297,7 +297,11 @@
     if (!xDomain || !yDomain) { console.error('JointDensity: xDomain and yDomain are required'); return null; }
     const dens = joint || ((a, b) => px(a) * py(b));
 
-    const frame = jointFrame({ width, height, margin, marginal, xDomain, yDomain, equal, xLabel, yLabel });
+    // strips hidden → drop the reserved marginal and balance the right margin against
+    // the label-padded left (jointFrame adds LABEL_PAD to the left for yLabel), so the
+    // reclaimed square stays centred in the SVG instead of shoved right
+    const frameMargin = marginals ? margin : { ...margin, right: margin.left + (yLabel ? LABEL_PAD : 0) };
+    const frame = jointFrame({ width, height, margin: frameMargin, marginal: marginals ? marginal : 0, xDomain, yDomain, equal, xLabel, yLabel });
     const [x0, x1] = frame.x.domain(), [y0, y1] = frame.y.domain();   // .nice()'d bounds
     const gx = i => x0 + (i / (n - 1)) * (x1 - x0);
     const gy = j => y0 + (j / (n - 1)) * (y1 - y0);
