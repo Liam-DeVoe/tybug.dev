@@ -1,0 +1,112 @@
+$figure-axis:   #ddd;     // axis baseline
+$figure-tick:   #e3e3e3;  // axis tick marks
+$figure-grid:   #f1f1f1;  // gridlines
+$figure-stroke: 1.8px;    // primary line stroke
+$figure-node-r: 5px;      // node radius
+
+
+.figure {
+    max-width: $content-inset-width;
+    margin: 1.75em auto;
+    text-align: center;
+
+    &__chart {
+        color: $color-body;
+        font-family: 'Source Serif 4', Georgia, serif;
+        display: block;
+        width: 100%;
+        height: auto;
+
+        // structure
+        .axis text {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 11px;
+            fill: $color-secondary;
+        }
+        .axis-label {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 12px;
+            fill: $color-secondary;
+            text-anchor: middle;
+        }
+        .axis .domain {
+            stroke: $figure-axis;
+        }
+        .axis line {
+            stroke: $figure-tick;
+        }
+        .grid .domain, .grid text {
+            display: none;
+        }
+        .grid line {
+            stroke: $figure-grid;
+        }
+        .line {
+            fill: none;
+            stroke-width: $figure-stroke;
+            stroke-linejoin: round;
+            stroke-linecap: round;
+        }
+        .edge {
+            fill: none;
+            stroke-linecap: round;
+        }
+        .node text {
+            fill: $color-body;
+            font-size: 13px;
+        }
+
+        // palette — rust primary, teal secondary, ink structure
+        .bar {
+            fill: $color-figure-rust;
+            fill-opacity: 0.78;
+        }
+        .line.series--a {
+            stroke: $color-figure-rust;
+        }
+        .line.series--b {
+            stroke: $color-figure-teal;
+        }
+        .edge {
+            stroke: rgba($color-body, 0.3);
+            stroke-width: 1.4;
+        }
+        .node circle {
+            r: $figure-node-r;
+            fill: $color-figure-rust;
+            stroke: none;
+        }
+
+        // joint plots — scatter dots, marginal density curves, joint contours
+        .point {
+            r: 2.6px;
+            fill: $color-figure-rust;
+            fill-opacity: 0.5;
+        }
+        .density {
+            fill: $color-figure-rust;
+            fill-opacity: 0.16;
+            &__line {
+                fill: none;
+                stroke: $color-figure-rust;
+                stroke-width: 1;
+                stroke-linejoin: round;
+                stroke-linecap: round;
+            }
+        }
+        // joint-density contours: nested super-level bands, faint outside →
+        // dense inside. The per-band opacity ramp is computed in figures.js from
+        // the `levels` opt, so only the band fill colour lives here.
+        .contour {
+            fill: $color-figure-rust;
+            stroke: none;
+        }
+    }
+
+    &__caption {
+        font-size: 0.85rem;
+        color: $color-secondary;
+        line-height: 1.45;
+        margin-top: 0.5rem;
+    }
+}

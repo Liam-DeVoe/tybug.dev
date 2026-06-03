@@ -54,6 +54,9 @@ MARKDOWN = {
         },
         "markdown.extensions.fenced_code": {},
         "markdown.extensions.tables": {},
+        # we use this to automatically slugify our headers. we don't actually use
+        # its toc feature
+        "markdown.extensions.toc": {},
         "pymdownx.arithmatex": {
             "generic": True,
         },

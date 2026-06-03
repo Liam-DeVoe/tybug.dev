@@ -1,0 +1,132 @@
+// Reusable tooltip primitive. Behavior lives in theme/static/js/tooltip.js
+// (loaded globally in base.html; inert when no .tooltip is present).
+//
+// Markup:
+//   <span class="tooltip">
+//       <span class="tooltip__trigger">note</span>
+//       <span class="tooltip__body">Free HTML, including <a href="…">links</a>.</span>
+//   </span>
+//
+// JS sets the body's position (it is position: fixed), the --caret-x offset, the
+// --bridge height, and toggles .is-open / .tooltip--below.
+.tooltip {
+    position: relative;
+
+    // The reveal body (popover). Hidden until JS adds .is-open.
+    &__body {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 50;
+        width: max-content;
+        // unquoted so libsass emits the CSS min() verbatim rather than trying to
+        // evaluate it (it can't reconcile em vs vw at compile time).
+        max-width: unquote("min(22em, 70vw)");
+        background: $color-tooltip-background;
+        border: 1px solid $color-tooltip-border;
+        border-radius: 4px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.09);
+        padding-top: 0.6em;
+        padding-right: 0.8em;
+        padding-bottom: 0.6em;
+        padding-left: 0.8em;
+        font-size: 0.9rem;
+        font-weight: 400;
+        line-height: 1.45;
+        color: $color-body;
+        text-align: left;
+        text-transform: none;
+        letter-spacing: normal;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(2px);
+        transition: opacity 0.12s ease, transform 0.12s ease;
+        pointer-events: none;
+
+        a {
+            font-size: 0.96em;
+        }
+
+        // Caret — a rotated square straddling the body edge; its two outer
+        // borders form a bordered point. One pseudo-element, leaving ::before
+        // free for the bridge.
+        &::after {
+            content: "";
+            position: absolute;
+            width: 9px;
+            height: 9px;
+            left: var(--caret-x, 50%);
+            top: 100%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            background: $color-tooltip-background;
+            border-right: 1px solid $color-tooltip-border;
+            border-bottom: 1px solid $color-tooltip-border;
+        }
+
+        // Transparent bridge over the gap between trigger and body, so moving
+        // the pointer onto the body never crosses dead space (which would fire
+        // mouseleave and close it).
+        &::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 100%;
+            height: var(--bridge, 9px);
+        }
+    }
+
+    &.is-open &__body {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    // When JS flips the body below the trigger, the caret points up and the
+    // bridge sits on top.
+    &--below &__body {
+        &::after {
+            top: 0;
+            border-right: none;
+            border-bottom: none;
+            border-left: 1px solid $color-tooltip-border;
+            border-top: 1px solid $color-tooltip-border;
+        }
+
+        &::before {
+            top: auto;
+            bottom: 100%;
+        }
+    }
+
+    // Trigger — the "note" tag.
+    &__trigger {
+        cursor: help;
+        outline-offset: 2px;
+        display: inline-block;
+        margin-left: 0.4em;
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        font-weight: 600;
+        color: $color-secondary;
+        border: 1px solid #d8d8d8;
+        border-radius: 3px;
+        padding-top: 0.05em;
+        padding-bottom: 0.05em;
+        padding-left: 0.35em;
+        padding-right: 0.35em;
+        vertical-align: middle;
+
+        &:hover {
+            color: $color-accent;
+            border-color: $color-accent;
+        }
+    }
+
+    &.is-open &__trigger {
+        color: $color-accent;
+        border-color: $color-accent;
+    }
+}

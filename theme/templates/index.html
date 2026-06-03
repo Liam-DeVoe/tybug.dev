@@ -11,8 +11,8 @@
 <div class="posts">
   {% for article in articles[:5] %}
   <div class="post">
-    <span class="date">{{ article.date.strftime('%B %Y') }}</span>
-    <a class="title" href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
+    <span class="post__date">{{ article.date.strftime('%B %Y') }}</span>
+    <a class="post__title" href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
   </div>
   {% endfor %}
 </div>
@@ -29,7 +29,7 @@
 {% if loop.index <= 3 %}
 <div class="thought">
   <a href="{{ SITEURL }}/{{ thought.override_url }}" class="thought__bar"></a>
-  <div class="thought-meta">
+  <div class="thought__meta">
     <a href="{{ SITEURL }}/{{ thought.override_url }}">{{ thought.date.strftime('%B %d, %Y') }}</a>
   </div>
   {{ thought.content }}

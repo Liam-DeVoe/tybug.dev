@@ -8,7 +8,7 @@
 
 <div class="thought">
   <a href="{{ SITEURL }}/{{ article.override_url }}" class="thought__bar"></a>
-  <div class="thought-meta">
+  <div class="thought__meta">
     {{ article.date.strftime('%B %d, %Y') }}
   </div>
   {{ article.content }}
@@ -16,14 +16,14 @@
 
 {% if article.prev_article or article.next_article %}
 <div class="article-nav">
-  <div class="prev">
+  <div class="article-nav__prev">
     {% if article.prev_article %}
-    <span class="label"><a href="{{ SITEURL }}/thoughts/{{ article.prev_article.thought_id }}">Previous</a></span>
+    <span class="article-nav__label"><a href="{{ SITEURL }}/thoughts/{{ article.prev_article.thought_id }}">Previous</a></span>
     {% endif %}
   </div>
-  <div class="next">
+  <div class="article-nav__next">
     {% if article.next_article %}
-    <span class="label"><a href="{{ SITEURL }}/thoughts/{{ article.next_article.thought_id }}">Next</a></span>
+    <span class="article-nav__label"><a href="{{ SITEURL }}/thoughts/{{ article.next_article.thought_id }}">Next</a></span>
     {% endif %}
   </div>
 </div>

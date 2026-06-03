@@ -5,5 +5,11 @@
 {% set active_nav = page.slug %}
 
 {% block content %}
+{% if page.page_css_class %}
+<div class="{{ page.page_css_class }}">
 {{ page.content }}
+</div>
+{% else %}
+{{ page.content }}
+{% endif %}
 {% endblock %}

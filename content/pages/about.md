@@ -1,6 +1,6 @@
 ---
-Title: About
-Slug: about
+title: About
+slug: about
 ---
 
 <img src="/theme/images/headshot.jpg" alt="Headshot of Liam DeVoe" class="headshot">

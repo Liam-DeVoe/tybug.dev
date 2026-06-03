@@ -1,6 +1,6 @@
 ---
-Title: Chat
-Slug: chat
+title: Chat
+slug: chat
 ---
 
 I find there are many people I am eager to talk to, but who I don't feel comfortable sending cold outreach to. I also suspect at least some of these people may be in the same and symmetrically-opposite position to me.

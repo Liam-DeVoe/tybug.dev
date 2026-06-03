@@ -9,7 +9,7 @@
 {% for thought in thoughts|reverse %}
 <div class="thought">
   <a href="{{ SITEURL }}/{{ thought.override_url }}" class="thought__bar"></a>
-  <div class="thought-meta">
+  <div class="thought__meta">
     <a href="{{ SITEURL }}/{{ thought.override_url }}">{{ thought.date.strftime('%B %d, %Y') }}</a>
   </div>
   {{ thought.content }}

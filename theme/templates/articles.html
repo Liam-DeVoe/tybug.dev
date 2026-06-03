@@ -8,8 +8,8 @@
 <div class="posts">
   {% for article in articles %}
   <div class="post">
-    <span class="date">{{ article.date.strftime('%B %Y') }}</span>
-    <a class="title" href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
+    <span class="post__date">{{ article.date.strftime('%B %Y') }}</span>
+    <a class="post__title" href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
   </div>
   {% endfor %}
 </div>

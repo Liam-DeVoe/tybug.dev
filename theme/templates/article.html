@@ -4,6 +4,15 @@
 
 {% block title %}{{ article.title }} | {{ SITENAME }}{% endblock %}
 
+{% block extra_head %}
+<script defer src="{{ SITEURL }}/theme/js/lightbox.js"></script>
+<script defer src="{{ SITEURL }}/theme/js/heading-anchors.js"></script>
+{% if article.figures %}
+  <script src="{{ SITEURL }}/theme/js/d3.min.js"></script>
+  <script src="{{ SITEURL }}/theme/js/figures.js"></script>
+{% endif %}
+{% endblock %}
+
 {% block content %}
 <article>
   <h1>{{ article.title }}</h1>
@@ -18,15 +27,15 @@
 
   {% if article.prev_article or article.next_article %}
   <div class="article-nav">
-    <div class="prev">
+    <div class="article-nav__prev">
       {% if article.prev_article %}
-      <span class="label">Previous</span>
+      <span class="article-nav__label">Previous</span>
       <a href="{{ SITEURL }}/{{ article.prev_article.url }}">{{ article.prev_article.title }}</a>
       {% endif %}
     </div>
-    <div class="next">
+    <div class="article-nav__next">
       {% if article.next_article %}
-      <span class="label">Next</span>
+      <span class="article-nav__label">Next</span>
       <a href="{{ SITEURL }}/{{ article.next_article.url }}">{{ article.next_article.title }}</a>
       {% endif %}
     </div>

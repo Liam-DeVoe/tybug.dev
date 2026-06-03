@@ -1,0 +1,20 @@
+$color-body: #333;
+$color-secondary: #777;
+$color-accent: #b44c1c;
+$color-thought-text: rgb(70, 70, 70);
+$color-thought-border: rgba($color-accent, 0.6);
+$color-border: #eee;
+
+$color-tooltip-background: #fff;
+$color-tooltip-border: #d8d2cc;
+
+$color-figure-rust: $color-accent;
+$color-figure-teal: #2e8b76;
+$color-figure-gold: #b8860b;
+
+// Syntax-highlighting string/number literals (see _rouge.scss). A warm forest
+// green: cool enough to separate from the rust keywords, but tonally at home on
+// the page in a way the figure teal isn't.
+$color-syntax-string: #4a7a3c;
+
+$content-inset-width: 92%;

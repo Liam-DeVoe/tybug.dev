@@ -1,53 +1,68 @@
+@import "base";
 @import "rouge";
+@import "figure";
+@import "tooltip";
+@import "property-testing";
 
-// Colors
-$color-body: #333;
-$color-secondary: #777;
-$color-accent: #b44c1c;
-$color-thought-text: rgb(70, 70, 70);
-$color-thought-border: rgba($color-accent, 0.6);
-$color-border: #eee;
+// Runtime colour bridge. `_base.scss` holds the palette as SCSS `$` tokens, but
+// those are invisible to the plain-CSS inline `<style>` blocks that articles use
+// The full colour palette is re-exported here
+// as `:root` custom properties so article CSS can reach any of it via `var(--…)`.
+// The bridge lives here, in the aggregator that emits CSS, rather than
+// in `_base.scss` (which is deliberately variables-only and emits nothing).
+:root {
+    --color-body: #{$color-body};
+    --color-secondary: #{$color-secondary};
+    --color-accent: #{$color-accent};
+    --color-border: #{$color-border};
+
+    --color-figure-rust: #{$color-figure-rust};
+    --color-figure-teal: #{$color-figure-teal};
+    --color-figure-gold: #{$color-figure-gold};
+
+    --color-syntax-string: #{$color-syntax-string};
+}
 
 // Reset
 *, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 // Body
 body {
-  font-family: 'Source Serif 4', Georgia, serif;
-  font-size: 1.05rem;
-  line-height: 1.72;
-  color: $color-body;
-  background: #fff;
-  padding: 3rem 1.5rem;
-  display: flex;
-  justify-content: center;
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1.05rem;
+    line-height: 1.72;
+    color: $color-body;
+    background: #fff;
+    padding: 3rem 1.5rem;
+    display: flex;
+    justify-content: center;
 }
 
 // Container
 .container {
-  max-width: 42em;
-  width: 100%;
-  position: relative;
+    max-width: 42em;
+    width: 100%;
+    position: relative;
 }
 
 // Links
 a {
-  color: $color-accent;
-  text-decoration: none;
+    color: $color-accent;
+    text-decoration: none;
 }
 a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 // Typography
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 400;
-  margin-top: 1.4rem;
-  margin-bottom: 1rem;
+    font-weight: 400;
+    margin-top: 1.4rem;
+    margin-bottom: 1rem;
 }
 h1 { font-size: 1.5rem; font-weight: 600; }
 h2 { font-size: 1.15rem; font-weight: 600; }
@@ -57,369 +72,524 @@ h5 { font-size: 1rem; }
 h6 { font-size: 0.95rem; }
 
 p {
-  margin-bottom: 1em;
+    margin-bottom: 1em;
 }
 
 li > p {
-  margin-bottom: 0.1rem;
+    margin-bottom: 0.1rem;
+}
+
+// inline subscript for body text.
+// line-height: 0 keeps it from stretching the line it sits on.
+.subscript {
+    font-size: 0.7em;
+    vertical-align: sub;
+    line-height: 0;
 }
 
 .quote {
-  width: 80%;
-  margin: 0 auto 1em;
-  font-style: italic;
+    width: 80%;
+    margin-top: 0;
+    margin-right: auto;
+    margin-bottom: 1em;
+    margin-left: auto;
+    font-style: italic;
 }
 
 ul, ol {
-  padding-left: 1.25em;
-  margin-bottom: 1em;
+    padding-left: 2.25em;
+    margin-bottom: 1em;
 
-  ul, ol {
-    margin-bottom: 0;
-  }
+    ul, ol {
+        margin-bottom: 0;
+    }
 }
 
 // Persistent header
 .site-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 2.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid $color-border;
-}
-.site-header .name {
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-.site-header .name a {
-  color: inherit;
-}
-.site-header nav {
-  font-size: 1.05rem;
-}
-.site-header nav a {
-  margin-left: 1.25em;
-  color: $color-secondary;
-}
-.site-header nav a:hover {
-  color: $color-accent;
-}
-.site-header nav a.active {
-  color: $color-body;
-  font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid $color-border;
+
+    &__name {
+        font-size: 1.5rem;
+        font-weight: 600;
+
+        a { color: inherit; }
+    }
+
+    nav {
+        font-size: 1.05rem;
+
+        a {
+            margin-left: 1.25em;
+            color: $color-secondary;
+
+            &:hover { color: $color-accent; }
+            &.active {
+                color: $color-body;
+                font-weight: 600;
+            }
+        }
+    }
 }
 
 // Post lists (article listings with margin dates)
 .posts {
-  list-style: none;
+    list-style: none;
 }
 .post {
-  position: relative;
-  margin-bottom: 0.65em;
-}
-.post .date {
-  font-size: 0.95rem;
-  color: $color-secondary;
-}
-.post .title {
-  font-size: 1.32rem;
+    position: relative;
+    margin-bottom: 0.65em;
+
+    &__date {
+        font-size: 0.95rem;
+        color: $color-secondary;
+    }
+    &__title {
+        font-size: 1.32rem;
+    }
 }
 
 // Section heads (homepage)
 .section-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.75rem;
 
-  h2 {
-    font-size: 0.95rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: $color-secondary;
-    margin: 0;
-  }
+    h2 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: $color-secondary;
+        margin: 0;
+    }
 
-  .all {
-    font-size: 0.78rem;
-    color: $color-secondary;
-  }
+    .all {
+        font-size: 0.78rem;
+        color: $color-secondary;
+    }
 }
 
 .section-foot {
-  margin-top: 1rem;
+    margin-top: 1rem;
 
-  a {
-    font-size: 0.88rem;
-    color: $color-secondary;
-    padding: 0.4em 1em;
-    border: 1px solid $color-accent;
-    border-radius: 6px;
-    transition: border-color 0.15s, color 0.15s;
+    a {
+        font-size: 0.88rem;
+        color: $color-secondary;
+        padding: 0.4em 1em;
+        border: 1px solid $color-accent;
+        border-radius: 6px;
+        transition: border-color 0.15s, color 0.15s;
 
-    &:hover {
-      color: $color-accent;
-      border-color: darken($color-accent, 10%);
-      text-decoration: none;
+        &:hover {
+            color: $color-accent;
+            border-color: darken($color-accent, 10%);
+            text-decoration: none;
+        }
     }
-  }
 }
 
 .section-gap {
-  height: 2.5rem;
+    height: 2.5rem;
 }
 
 // Thought entries
 .thought {
-  padding: 0rem 0 0rem 1rem;
-  margin-top: 1rem;
-  margin-bottom: 1.5rem;
-  position: relative;
-  background: transparent;
-  border: none;
-  border-radius: 0;
+    padding-top: 0rem;
+    padding-right: 0;
+    padding-bottom: 0rem;
+    padding-left: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    background: transparent;
+    border: none;
+    border-radius: 0;
 
-  p, li {
-    color: $color-thought-text;
-    padding: 0.3rem 0;
-    font-size: 0.95rem;
-  }
-}
-.thought .thought-meta {
-  font-size: 0.9rem;
-  color: $color-secondary;
-  margin-bottom: 0.3rem;
-}
-.thought .thought-meta a {
-  color: $color-secondary;
-}
-.thought .thought-meta a:hover {
-  color: $color-accent;
-}
+    p, li {
+        color: $color-thought-text;
+        padding: 0.3rem 0;
+        font-size: 0.95rem;
+    }
 
-.thought__date {
-  color: $color-secondary;
-  font-size: 0.85rem;
-  margin-top: 0.25rem;
-}
+    &__meta {
+        font-size: 0.9rem;
+        color: $color-secondary;
+        margin-bottom: 0.3rem;
 
-.thought__bar {
-  position: absolute;
-  left: -1.75rem;
-  top: -1rem;
-  bottom: -1rem;
-  width: 3.5rem;
-  cursor: pointer;
-  text-decoration: none;
+        a {
+            color: $color-secondary;
+            &:hover { color: $color-accent; }
+        }
+    }
 
-  &::before {
-    content: '';
-    position: absolute;
-    left: 1.75rem;
-    top: 1rem;
-    bottom: 1rem;
-    width: 3px;
-    background: $color-thought-border;
-    transform: translateX(-50%);
-    transition: width 0.1s ease;
-  }
+    &__date {
+        color: $color-secondary;
+        font-size: 0.85rem;
+        margin-top: 0.25rem;
+    }
 
-  &:hover::before {
-    background: rgba($color-accent, 0.8);
-    width: 4.5px;
-  }
+    &__bar {
+        position: absolute;
+        left: -1.75rem;
+        top: -1rem;
+        bottom: -1rem;
+        width: 3.5rem;
+        cursor: pointer;
+        text-decoration: none;
 
-  &:hover {
-    text-decoration: none;
-  }
+        &::before {
+            content: '';
+            position: absolute;
+            left: 1.75rem;
+            top: 1rem;
+            bottom: 1rem;
+            width: 3px;
+            background: $color-thought-border;
+            transform: translateX(-50%);
+            transition: width 0.1s ease;
+        }
+
+        &:hover::before {
+            background: rgba($color-accent, 0.8);
+            width: 4.5px;
+        }
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
 }
 
 // Article page
 article h1 {
-  font-size: 1.7rem;
-  font-weight: 600;
-  line-height: 1.3;
-  margin-top: 0;
-}
-article .meta {
-  font-size: 0.95rem;
-  color: $color-secondary;
-  margin-bottom: 2rem;
+    font-size: 1.7rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-top: 0;
 }
 article h2 {
-  font-size: 1.15rem;
-  font-weight: 600;
-  margin: 2rem 0 0.75rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-top: 1.7rem;
+    margin-right: 0;
+    margin-bottom: 0.75rem;
 }
+article .meta {
+    font-size: 0.95rem;
+    color: $color-secondary;
+    margin-bottom: 2rem;
+}
+
+// Heading anchors — a "#" in the left gutter that appears on hover and copies
+// a link to the section when clicked.
+.has-heading-anchor {
+    position: relative;
+}
+.heading-anchor {
+    position: absolute;
+    left: -0.9em;
+    top: 0;
+    color: $color-secondary;
+    font-weight: 400;
+    text-decoration: none;
+
+    &:hover {
+        color: $color-accent;
+        text-decoration: none;
+    }
+
+    // The "#" glyph. Hidden until the heading is hovered, so it never lingers
+    // on its own — only the "Copied" tooltip stays after the cursor leaves.
+    &::before {
+        content: "#";
+        opacity: 0;
+        transition: opacity 0.1s ease;
+    }
+
+    // "Copied" confirmation, driven solely by .is-copied so it shows (and fades)
+    // independent of hover.
+    &::after {
+        content: "Copied";
+        position: absolute;
+        right: 1.5em;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.7rem;
+        font-weight: 400;
+        line-height: 1;
+        white-space: nowrap;
+        color: $color-accent;
+        opacity: 0;
+        transition: opacity 0.16s ease;
+    }
+    &.is-copied::after {
+        opacity: 1;
+    }
+}
+.has-heading-anchor:hover .heading-anchor::before {
+    opacity: 0.55;
+}
+.heading-anchor:hover::before,
+.heading-anchor:focus-visible::before {
+    opacity: 1;
+}
+
 
 // Headshot (about page)
 .headshot {
-  float: right;
-  width: 14em;
-  height: 14em;
-  object-fit: cover;
-  margin-top: 0em;
-  margin-right: 1.5em;
-  margin-bottom: 1.35em;
-  margin-left: 1.35em;
-  border-radius: 20px;
+    float: right;
+    width: 14em;
+    height: 14em;
+    object-fit: cover;
+    margin-top: 0em;
+    margin-right: 1.5em;
+    margin-bottom: 1.35em;
+    margin-left: 1.35em;
+    border-radius: 20px;
 }
 
 @media (max-width: 40em) {
-  .headshot {
-    width: 9em;
-    height: 9em;
-    margin-top: 0.3em;
-    margin-right: 0;
-    margin-bottom: 0.75em;
-    margin-left: 1.25em;
-  }
+    .headshot {
+        width: 9em;
+        height: 9em;
+        margin-top: 0.3em;
+        margin-right: 0;
+        margin-bottom: 0.75em;
+        margin-left: 1.25em;
+    }
 }
 
 // Images
 article img {
-  display: block;
-  max-width: 92%;
-  height: auto;
-  margin: 1.5em auto;
+    display: block;
+    max-width: $content-inset-width;
+    height: auto;
+    margin: 1.5em auto;
+}
+article img.zoomable,
+article .figure__chart.zoomable {
+    cursor: zoom-in;
+}
+
+// Lightbox (click an image to enlarge it, centered on a dimmed backdrop)
+.lightbox-open {
+    overflow: hidden;
+}
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2.5rem;
+    background: rgba(20, 20, 20, 0.85);
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+
+    &.is-open {
+        display: flex;
+        opacity: 1;
+    }
+
+    &__stage {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-width: 100%;
+        min-height: 0;
+    }
+
+    &__img {
+        max-width: 100%;
+        max-height: 88vh;
+        height: auto;
+        border-radius: 4px;
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    // Charts are designed for a white background, so seat the cloned SVG on a panel.
+    &__panel {
+        background: #fff;
+        padding: 1.75rem;
+        border-radius: 6px;
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+        width: unquote("min(90vw, 56em)");
+
+        .figure__chart {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+        }
+    }
+
+    &__caption {
+        max-width: 42em;
+        color: #ddd;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        text-align: center;
+    }
 }
 
 // Code
 code {
-  font-family: ui-monospace, 'Cascadia Code', monospace;
-  font-size: 0.83em;
+    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-size: 0.83em;
 }
 p code, li code {
-  background: rgba(0, 0, 0, 0.04);
-  padding: 4px;
-  border-radius: 2px;
+    background: rgba(0, 0, 0, 0.04);
+    padding: 4px;
+    border-radius: 2px;
 }
 pre {
-  background: rgba(0, 0, 0, 0.03);
-  padding: 1em 1.25em;
-  margin: 1.5em 0;
-  overflow-x: auto;
-  font-size: 0.82rem;
-  line-height: 1.5;
-  border-radius: 2px;
+    background: rgba(0, 0, 0, 0.03);
+    padding: 0.8em 0.8em;
+    max-width: $content-inset-width;
+    margin: 1.5em auto;
+    overflow-x: auto;
+    line-height: 1.15;
+    border-radius: 2px;
 }
 pre code {
-  background: none;
-  padding: 0;
+    background: none;
+    padding: 0;
+}
+// Highlighted blocks wrap the <pre> in a .highlight div; move the inset onto
+// the wrapper so they line up with plain code blocks, images, and figures.
+.highlight {
+    max-width: $content-inset-width;
+    margin: 1.5em auto;
 }
 .highlight > pre {
-  max-width: 100%;
+    max-width: 100%;
+    margin: 0;
 }
 
 // Sidenotes
 .sidenote {
-  font-size: 0.78rem;
-  color: $color-secondary;
-  line-height: 1.45;
-  overflow-wrap: break-word;
+    font-size: 0.78rem;
+    color: $color-secondary;
+    line-height: 1.45;
+    overflow-wrap: break-word;
 }
 .sidenote sup {
-  color: $color-accent;
-  font-size: 0.85em;
-  margin-right: 0.2em;
+    color: $color-accent;
+    font-size: 0.85em;
+    margin-right: 0.2em;
 
-  &::before { content: "["; }
-  &::after  { content: "]"; }
+    &::before { content: "["; }
+    &::after  { content: "]"; }
 }
 sup a {
-  color: $color-accent;
-  text-decoration: none;
-  font-size: 0.8em;
+    color: $color-accent;
+    text-decoration: none;
+    font-size: 0.8em;
 }
 
 // Article navigation (prev/next)
 .article-nav {
-  margin-top: 2.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid $color-border;
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.95rem;
-}
-.article-nav .next {
-  text-align: right;
-}
-.article-nav .label {
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #bbb;
-  display: block;
-  margin-bottom: 0.15rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid $color-border;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+
+    &__next {
+        text-align: right;
+    }
+    &__label {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #bbb;
+        display: block;
+        margin-bottom: 0.15rem;
+    }
 }
 
 // Tags
 .tag {
-  padding: 0.075rem 0.25rem;
-  font-size: 0.95rem;
-  border-radius: 0.25rem;
-  background-color: rgba(0, 0, 0, 0.04);
-  color: $color-secondary;
-  text-align: center;
+    padding: 0.075rem 0.25rem;
+    font-size: 0.95rem;
+    border-radius: 0.25rem;
+    background-color: rgba(0, 0, 0, 0.04);
+    color: $color-secondary;
+    text-align: center;
 
-  &:hover {
-    text-decoration: none;
-    background-color: rgba(0, 0, 0, 0.08);
-    color: $color-accent;
-  }
+    &:hover {
+        text-decoration: none;
+        background-color: rgba(0, 0, 0, 0.08);
+        color: $color-accent;
+    }
 }
 
 // Footnotes
 .footnote {
-  font-size: 0.85rem;
-  color: $color-secondary;
+    font-size: 0.85rem;
+    color: $color-secondary;
 }
 
 .footnote-ref {
-  font-size: 0.85em;
+    font-size: 0.85em;
 
-  &::before { content: "["; }
-  &::after  { content: "]"; }
+    &::before { content: "["; }
+    &::after  { content: "]"; }
 }
 
 // Responsive: wide screens — margin dates and sidenotes
 @media (min-width: 62em) {
-  .post {
-    display: grid;
-    grid-template-columns: 10em 1fr;
-    gap: 0 1.5em;
-    align-items: baseline;
-    margin-left: -11.5em;
-  }
-  .post .date {
-    text-align: right;
-    white-space: nowrap;
-  }
+    .post {
+        display: grid;
+        grid-template-columns: 10em 1fr;
+        gap: 0 1.5em;
+        align-items: baseline;
+        margin-left: -11.5em;
 
-  .sidenote {
-    float: right;
-    clear: right;
-    margin-right: calc(-14em - 2em);
-    width: 13em;
-    margin-bottom: 1em;
-  }
+        &__date {
+            text-align: right;
+            white-space: nowrap;
+        }
+    }
+
+    .sidenote {
+        float: right;
+        clear: right;
+        margin-right: calc(-14em - 2em);
+        width: 13em;
+        margin-bottom: 1em;
+    }
 }
 
 // Responsive: narrow screens — inline fallbacks
 @media (max-width: 62em) {
-  .post .date {
-    display: block;
-    margin-bottom: 0.1em;
-  }
+    .post {
+        &__date {
+            display: block;
+            margin-bottom: 0.1em;
+        }
+    }
 
-  .sidenote {
-    display: block;
-    margin: 0.5em 0 0.75em 1em;
-    padding-left: 0.75em;
-    border-left: 2px solid #e8e8e8;
-  }
+    .sidenote {
+        display: block;
+        margin-top: 0.5em;
+        margin-right: 0;
+        margin-bottom: 0.75em;
+        margin-left: 1em;
+        padding-left: 0.75em;
+        border-left: 2px solid #e8e8e8;
+    }
 }
