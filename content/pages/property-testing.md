@@ -13,6 +13,7 @@ This list is intended as a "seminal overview". If one were to read every linked 
 <a href="#posts">Posts</a>
 <a href="#generation">Generation</a>
 <a href="#shrinking">Shrinking</a>
+<a href="#test-synthesis">Test synthesis</a>
 <a href="#tools">Tools</a>
 <a href="#empirical-results">Empirical results</a>
 <a href="#other-lists">Other lists</a>
@@ -86,16 +87,18 @@ This list is intended as a "seminal overview". If one were to read every linked 
 
 Discussions of recurring themes in property-based testing.
 
-- [F# for Fun and Profit's Property Based Testing series](https://fsharpforfunandprofit.com/series/property-based-testing/) introduces PBT; [Choosing properties for property-based testing](https://fsharpforfunandprofit.com/posts/property-based-testing-2/) is commonly referenced.
 - [Property-Based Testing Is Fuzzing](https://blog.nelhage.com/post/property-testing-is-fuzzing/) argues that PBT and fuzzing are two different names for the same problem.
+- [Two kinds of testing](https://blog.nelhage.com/post/two-kinds-of-testing/) and its predecessor post [Property Testing like AFL](https://blog.nelhage.com/post/property-testing-like-afl/) describe some desirable UX of property-based testing tools.
 - [Reducers are Fuzzers](https://blog.regehr.org/archives/1284) argues that during the course of shrinking, one is also inadvertently fuzzing.
 - [Fuzzers Need Taming](https://blog.regehr.org/archives/925) describes the fuzzer taming problem: how to identify when two failing test cases are caused by the same bug?
+- [What is Property Based Testing?](https://hypothesis.works/articles/what-is-property-based-testing/) gives one opinion on where property-based testing sits relative to fuzzing and other techniques.
 
 ## Tutorials
 
-Introductory material and tutorials for property-based testing.
+Introductory material and property-based testing tutorials.
 
 - [Zac Hatfield-Dodds and Ryan Soklaski's An Introduction to Property-Based Testing](https://github.com/rsokl/testing-tutorial).
+- [F# for Fun and Profit's Property Based Testing series](https://fsharpforfunandprofit.com/series/property-based-testing/) introduces PBT; [Choosing properties for property-based testing](https://fsharpforfunandprofit.com/posts/property-based-testing-2/) is commonly referenced.
 
 ## Generation
 
@@ -112,8 +115,15 @@ Shrinking (also known as minimization or test-case reduction) takes a complex fa
 - [Everything You Ever Wanted To Know About Test-Case Reduction, But Didn’t Know to Ask](https://blog.trailofbits.com/2019/11/11/test-case-reduction/) gives an overview of shrinking and the shrinking literature.
 - [Test-Case Reduction via Test-Case Generation: Insights from the Hypothesis Reducer](https://drmaciver.github.io/papers/reduction-via-generation-preview.pdf) introduces internal shrinking: instead of shrinking the test case, shrink the choices made during the generation of that test case. This internal view avoids several classical challenges of shrinking.
 - [falsify: Internal Shrinking Reimagined for Haskell](https://well-typed.com/blog/aux/files/falsify.pdf) describes a Hypothesis-inspired internal shrinking algorithm that represents test cases as structured trees. See also [the blog post](https://well-typed.com/blog/2023/04/falsify/) and [the talk](https://www.youtube.com/watch?v=csKkTas6X58) by the same name.
-- [C-Reduce](https://github.com/csmith-project/creduce). Shrinking for C and C++ programs. See also the paper [Test-Case Reduction for C Compiler Bugs](https://users.cs.utah.edu/~regehr/papers/pldi12-preprint.pdf) and the blog post [Design and Evolution of C-Reduce](https://blog.regehr.org/archives/1678).
-- [Shrinkray](https://github.com/DRMacIver/shrinkray). A general-purpose shrinker that works over any file format.
+- [C-Reduce](https://github.com/csmith-project/creduce) is a shrinker for C and C++ programs. See also the paper [Test-Case Reduction for C Compiler Bugs](https://users.cs.utah.edu/~regehr/papers/pldi12-preprint.pdf) and the blog post [Design and Evolution of C-Reduce](https://blog.regehr.org/archives/1678).
+- [Shrinkray](https://github.com/DRMacIver/shrinkray) is a general-purpose shrinker that works over any file format.
+
+## Test synthesis
+
+Not satisfied with automating the generation of test cases through property-based testing, this section explores automating the process of writing property-based tests themselves.
+
+- The [Hypothesis Ghostwriter](https://hypothesis.readthedocs.io/en/latest/reference/integrations.html#ghostwriter) generates a starting point for property-based tests using good old fashed heuristics. See also [this in-browser demo](https://zhd.dev/ghostwriter/).
+- [A Claude Code command for Hypothesis](https://hypothesis.works/articles/claude-code-plugin/) and the related paper [Finding bugs across the Python ecosystem with Claude and property-based testing](https://red.anthropic.com/2026/property-based-testing/) automatically infers property-based tests and generators using AI.
 
 ## Tools
 
@@ -124,6 +134,8 @@ Shrinking (also known as minimization or test-case reduction) takes a complex fa
 - [hypothesis-crosshair](https://github.com/pschanely/hypothesis-crosshair) is a concolic execution[^1] backend for Hypothesis, built on [Crosshair](https://github.com/pschanely/crosshair).
 <!-- - [HypoFuzz](https://github.com/Zac-HD/hypofuzz). Coverage-guided PBT for Hypothesis tests. -->
 <!-- - [DeepState](https://github.com/trailofbits/deepstate) is a framework for declaring C and C++ tests that can be run under multiple backends -->
+<!-- - [propverify](https://project-oak.github.io/rust-verification-tools/using-propverify/) -->
+<!-- - [propfuzz](https://github.com/facebookarchive/propfuzz) -->
 
 [^1]: Symbolic and concolic execution tools interpret code executions as an SMT statement, then use an SMT solver to synthesize powerful new test cases.
 
@@ -140,4 +152,4 @@ Datasets and research on how developers practically interact with property-based
 Not satisfied? Here are some additional lists of resources.
 
 - [Jan Midtgaard's PBT framework list](https://github.com/jmid/pbt-frameworks) contrasts various PBT frameworks.
-- [HypoFuzz literature review](https://hypofuzz.com/docs/literature.html) focuses more on fuzzing, but may still be valuable.
+- [HypoFuzz's literature review](https://hypofuzz.com/docs/literature.html) focuses more on fuzzing, but may still be valuable.
