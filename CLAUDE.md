@@ -54,6 +54,10 @@ slug: post-slug
 
 Optional: `hidden: true` (accessible but unlisted), `status: draft` (not published).
 
+## Editing drafts
+
+When editing an existing draft, never write prose (body sentences, intros, transitions, captions) unless explicitly asked to. The author writes the prose; you make the structural, figure, and code changes they request. If a change seems to need connecting prose, leave it to the author rather than inventing it.
+
 ## Figures (data visualizations)
 
 D3-based charts for articles. Opt in per article with `Figures: true` in the front matter; `article.html` then loads vendored D3 + `figures.js` in the `<head>` (articles only — not pages or thoughts).

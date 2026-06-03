@@ -284,10 +284,14 @@
   // filled contour of the density grid; the marginals are that grid collapsed
   // onto each axis (a Riemann sum over the other variable), so they stay the
   // true marginals even when `joint` is correlated.
+  // `marginals: false` hides the top/right strips but still *reserves* their layout
+  // space, so the center panel stays the same size and position as a marginal'd chart
+  // (the reserved right strip balances the y-axis gutter, keeping the panel centred —
+  // reclaiming the space instead would shove the panel rightward).
   function JointDensity({ x: px, y: py, joint, xDomain, yDomain } = {}, {
     width = 460, height = 380,
     margin = { top: 8, right: 8, bottom: 30, left: 38 },
-    marginal = 54, n = 80, levels = 6, equal = false,
+    marginal = 54, n = 80, levels = 6, equal = false, marginals = true,
     xLabel, yLabel, decorate,
   } = {}) {
     if (!xDomain || !yDomain) { console.error('JointDensity: xDomain and yDomain are required'); return null; }
@@ -317,11 +321,13 @@
       .attr('d', d3.geoPath(project));
 
     // marginals: collapse the grid onto each axis
-    const dxv = (x1 - x0) / (n - 1), dyv = (y1 - y0) / (n - 1);
-    const mx = d3.range(n).map(i => { let s = 0; for (let j = 0; j < n; j++) s += values[j * n + i]; return [gx(i), s * dyv]; });
-    const my = d3.range(n).map(j => { let s = 0; for (let i = 0; i < n; i++) s += values[j * n + i]; return [gy(j), s * dxv]; });
-    topMarginal(frame.topG, frame, mx);
-    rightMarginal(frame.rightG, frame, my);
+    if (marginals) {
+      const dxv = (x1 - x0) / (n - 1), dyv = (y1 - y0) / (n - 1);
+      const mx = d3.range(n).map(i => { let s = 0; for (let j = 0; j < n; j++) s += values[j * n + i]; return [gx(i), s * dyv]; });
+      const my = d3.range(n).map(j => { let s = 0; for (let i = 0; i < n; i++) s += values[j * n + i]; return [gy(j), s * dxv]; });
+      topMarginal(frame.topG, frame, mx);
+      rightMarginal(frame.rightG, frame, my);
+    }
 
     if (decorate) decorate({ svg: frame.svg, x: frame.x, y: frame.y });
     return frame.svg.node();
