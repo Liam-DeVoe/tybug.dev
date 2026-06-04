@@ -2,6 +2,7 @@
 title: Git as a backup system
 date: 2022-08-23
 slug: git-as-a-backup-system
+hidden: true
 ---
 
 For the past few months I've been using git as my backup system for my mac. I'm only backing up my own files (music, code, etc) and not software or system files, so it's not intended to be a drop-in replacement for setting up a new machine.
