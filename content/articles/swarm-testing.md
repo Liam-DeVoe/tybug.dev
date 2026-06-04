@@ -737,6 +737,7 @@ It might be helpful to play around and see why this algorithm gives us coverage 
         svg.append('rect')
             .attr('x', PL).attr('y', PT).attr('width', PR - PL).attr('height', PB - PT)
             .attr('fill', 'transparent').style('cursor', 'crosshair')
+            .style('touch-action', 'none')   // claim tap-drag for the panel instead of page scroll
             .on('pointermove pointerdown', function (e) { engage(); const [px, py] = d3.pointer(e); update(px, py); })
             .on('pointerleave', function (e) { if (e.pointerType === 'mouse') clear(); });
 
@@ -949,9 +950,9 @@ This testing strategy will easily find both the new `optimize` bug, and our orig
 
 ## One step further
 
-I'll conclude with a teaser. Above, I said the activation probabilities are sampled from a uniform distribution on $[0, 1]$. Let's consider a program with many features; say, 10. Now suppose this program has a bug only in some particular configuration of relative feature probabilities. For example, that some set of three features are half as common as some other set of three. Uniformly sampling the activation probabilities is very unlikely to produce this configuration, and so we will miss this bug.
+I'll conclude with a teaser. Above, I said the activation probabilities are sampled from a uniform distribution on $[0, 1]$. Let's consider a program with more features; say, 10. Now suppose this program has a bug only in some particular configuration of relative feature probabilities. For example, that some set of three features are half as common as some other set of three. Uniformly sampling the activation probabilities is very unlikely to produce this configuration, and so we will miss this bug.
 
-We want a distribution of activation probabilities that is likely to produce this configuration. Not only that, we want a distribution of activation probabilities that is also likely to produce any possible bug-inducing configuration: feature A half as likely as B half as likely as C; A ten times as likely as all other features; feature probabilities distributed according to some power law; and many others besides.
+We want a distribution of activation probabilities that is likely to produce this configuration. Not only that, we want a distribution of activation probabilities that is also likely to produce any other possible bug-inducing configuration: feature A half as likely as B half as likely as C; A ten times as likely as all other features; feature probabilities distributed according to some power law; and many others besides.
 
 This implies the distribution of activation probabilities *should itself be randomly sampled from the space of distributions*.
 
