@@ -33,12 +33,10 @@ $color-syntax-string: #4a7a3c;
     --color-syntax-string: #{$color-syntax-string};
 }
 
-$content-inset-width: 92%;
-
 @mixin inset-media {
-    max-width: $content-inset-width;
+    max-width: 92%;
 
     @media (max-width: 62em) {
-        max-width: 100%;
+        max-width: 98%;
     }
 }
