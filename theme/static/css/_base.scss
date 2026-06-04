@@ -17,4 +17,28 @@ $color-figure-gold: #b8860b;
 // the page in a way the figure teal isn't.
 $color-syntax-string: #4a7a3c;
 
+// Runtime colour bridge. The palette above is SCSS `$` tokens, invisible to the
+// plain-CSS inline `<style>` blocks that articles use. Re-export it as `:root`
+// custom properties so article CSS can reach any colour via `var(--…)`.
+:root {
+    --color-body: #{$color-body};
+    --color-secondary: #{$color-secondary};
+    --color-accent: #{$color-accent};
+    --color-border: #{$color-border};
+
+    --color-figure-rust: #{$color-figure-rust};
+    --color-figure-teal: #{$color-figure-teal};
+    --color-figure-gold: #{$color-figure-gold};
+
+    --color-syntax-string: #{$color-syntax-string};
+}
+
 $content-inset-width: 92%;
+
+@mixin inset-media {
+    max-width: $content-inset-width;
+
+    @media (max-width: 62em) {
+        max-width: 100%;
+    }
+}

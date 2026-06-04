@@ -4,25 +4,6 @@
 @import "tooltip";
 @import "property-testing";
 
-// Runtime colour bridge. `_base.scss` holds the palette as SCSS `$` tokens, but
-// those are invisible to the plain-CSS inline `<style>` blocks that articles use
-// The full colour palette is re-exported here
-// as `:root` custom properties so article CSS can reach any of it via `var(--…)`.
-// The bridge lives here, in the aggregator that emits CSS, rather than
-// in `_base.scss` (which is deliberately variables-only and emits nothing).
-:root {
-    --color-body: #{$color-body};
-    --color-secondary: #{$color-secondary};
-    --color-accent: #{$color-accent};
-    --color-border: #{$color-border};
-
-    --color-figure-rust: #{$color-figure-rust};
-    --color-figure-teal: #{$color-figure-teal};
-    --color-figure-gold: #{$color-figure-gold};
-
-    --color-syntax-string: #{$color-syntax-string};
-}
-
 // Reset
 *, *::before, *::after {
     box-sizing: border-box;
@@ -371,7 +352,7 @@ article .meta {
 // Images
 article img {
     display: block;
-    max-width: $content-inset-width;
+    @include inset-media;
     height: auto;
     margin: 1.5em auto;
 }
@@ -457,7 +438,7 @@ p code, li code {
 pre {
     background: rgba(0, 0, 0, 0.03);
     padding: 0.8em 0.8em;
-    max-width: $content-inset-width;
+    @include inset-media;
     margin: 1.5em auto;
     overflow-x: auto;
     line-height: 1.15;
@@ -470,7 +451,7 @@ pre code {
 // Highlighted blocks wrap the <pre> in a .highlight div; move the inset onto
 // the wrapper so they line up with plain code blocks, images, and figures.
 .highlight {
-    max-width: $content-inset-width;
+    @include inset-media;
     margin: 1.5em auto;
 }
 .highlight > pre {

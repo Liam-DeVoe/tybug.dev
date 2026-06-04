@@ -6,7 +6,7 @@ $figure-node-r: 5px;      // node radius
 
 
 .figure {
-    max-width: $content-inset-width;
+    @include inset-media;
     margin: 1.75em auto;
     text-align: center;
 
