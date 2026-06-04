@@ -39,16 +39,25 @@ def transform_footnotes_to_sidenotes(content):
     if not footnotes:
         return
 
-    # After each footnote ref, inject a sidenote span
+    # After each footnote ref, inject a sidenote span. Any punctuation that
+    # immediately follows the reference is pulled in front of the sidenote so
+    # it stays attached to the ref — otherwise on narrow screens, where the
+    # sidenote is display:block, the trailing punctuation gets orphaned on its
+    # own line below the sidenote box.
     def replace_ref(match):
         fn_id = match.group(1)
         fn_num = match.group(2)
+        punct = match.group(3)
         fn_text = footnotes.get(fn_id, "")
+        ref = (
+            f'<sup id="fnref:{fn_id}">'
+            f'<a class="footnote-ref" href="#fn:{fn_id}">{fn_num}</a></sup>'
+        )
         sidenote = f'<span class="sidenote"><sup>{fn_num}</sup> {fn_text}</span>'
-        return match.group(0) + sidenote
+        return ref + punct + sidenote
 
     html = re.sub(
-        r'<sup id="fnref:([^"]+)"><a class="footnote-ref" href="#fn:\1">(\d+)</a></sup>',
+        r'<sup id="fnref:([^"]+)"><a class="footnote-ref" href="#fn:\1">(\d+)</a></sup>([.,;:!?)\'"]*)',
         replace_ref,
         html,
     )
