@@ -88,10 +88,15 @@ figures: true
     /* interactive "build up the swarm distribution" figure */
     .swarm-build__controls {
         display: flex;
+        flex-wrap: wrap;
         gap: 0.6em;
         align-items: center;
         justify-content: center;
         margin-top: 0.8em;
+    }
+    /* break spacer: no-op on desktop, forces count + reset onto a new line on mobile */
+    .swarm-build__break {
+        display: none;
     }
     .swarm-build__btn {
         cursor: pointer;
@@ -111,6 +116,16 @@ figures: true
         font-size: 0.9em;
         font-variant-numeric: tabular-nums;
         min-width: 6em;
+    }
+    @media (max-width: 40em) {
+        .swarm-build__controls {
+            row-gap: 0.4em;
+        }
+        .swarm-build__break {
+            display: block;
+            flex-basis: 100%;
+            height: 0;
+        }
     }
     /* interactive "pick one activation config" hover figure */
     .figure__chart .swarm-hover__dot {
@@ -937,6 +952,9 @@ Here, you can see that exploration in practice:
         controls.appendChild(button('×5', () => refresh(d3.range(5).map(() => addSample()))));
         controls.appendChild(button('×100', () => { for (let i = 0; i < 100; i++) addSample(); refresh(); }));
         controls.appendChild(button('×1000', () => { for (let i = 0; i < 1000; i++) addSample(); refresh(); }));
+        const controlsBreak = document.createElement('div');   // wraps count + reset to a new line on mobile
+        controlsBreak.className = 'swarm-build__break';
+        controls.appendChild(controlsBreak);
         controls.appendChild(count);   // sample count sits before reset, setting reset apart
         controls.appendChild(button('reset', () => { acc.fill(0); N = 0; refresh(); }));
         wrap.appendChild(controls);
