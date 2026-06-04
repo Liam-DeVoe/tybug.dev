@@ -662,7 +662,8 @@ It might be helpful to play around and see why this algorithm gives us coverage 
         }
 
         // static chart: grid + axes + labels, plus an (initially empty) hover layer
-        const svg = d3.create('svg').attr('viewBox', [0, 0, width, height]).attr('class', 'figure__chart');
+        const svg = d3.create('svg').attr('viewBox', [0, 0, width, height]).attr('class', 'figure__chart')
+            .style('touch-action', 'none');   // claim tap-drag for the panel; on the root <svg> (WebKit ignores it on inner SVG els)
         svg.append('g').attr('class', 'grid').attr('transform', `translate(${PL},0)`)
             .call(d3.axisLeft(Y).ticks(5).tickSize(-(PR - PL)).tickFormat(''));
         svg.append('g').attr('class', 'grid').attr('transform', `translate(0,${PB})`)
@@ -752,7 +753,6 @@ It might be helpful to play around and see why this algorithm gives us coverage 
         svg.append('rect')
             .attr('x', PL).attr('y', PT).attr('width', PR - PL).attr('height', PB - PT)
             .attr('fill', 'transparent').style('cursor', 'crosshair')
-            .style('touch-action', 'none')   // claim tap-drag for the panel instead of page scroll
             .on('pointermove pointerdown', function (e) { engage(); const [px, py] = d3.pointer(e); update(px, py); })
             .on('pointerleave', function (e) { if (e.pointerType === 'mouse') clear(); });
 
