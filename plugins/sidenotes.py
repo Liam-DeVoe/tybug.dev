@@ -2,6 +2,39 @@ import re
 
 from pelican import signals
 
+# Footnote definition line, e.g. ``[^id]: text``. python-markdown allows up to
+# three leading spaces and any non-``]`` characters in the id.
+FOOTNOTE_DEF_RE = re.compile(r"^[ ]{0,3}\[\^([^\]]+)\]:", re.MULTILINE)
+
+def check_duplicate_footnotes(content):
+    """Fail the build when an article defines the same footnote id twice.
+
+    python-markdown silently keeps only the last definition of a duplicated id,
+    so by the time the HTML is rendered the collision is invisible. We catch it
+    here by scanning the raw source instead.
+    """
+    # content_object_init also fires for static files (images, PDFs); skip
+    # anything that isn't UTF-8 text.
+    try:
+        with open(content.source_path, encoding="utf-8") as f:
+            text = f.read()
+    except (OSError, UnicodeDecodeError):
+        return
+
+    seen = set()
+    duplicates = []
+    for match in FOOTNOTE_DEF_RE.finditer(text):
+        fn_id = match.group(1)
+        if fn_id in seen and fn_id not in duplicates:
+            duplicates.append(fn_id)
+        seen.add(fn_id)
+
+    if duplicates:
+        ids = ", ".join(f"[^{fn_id}]" for fn_id in duplicates)
+        raise RuntimeError(
+            f"Duplicate footnote definition(s) {ids} in {content.source_path}. "
+        )
+
 
 def transform_footnotes_to_sidenotes(content):
     """Transform Markdown footnotes into sidenotes for margin display.
@@ -69,4 +102,5 @@ def transform_footnotes_to_sidenotes(content):
 
 
 def register():
+    signals.content_object_init.connect(check_duplicate_footnotes)
     signals.content_object_init.connect(transform_footnotes_to_sidenotes)
