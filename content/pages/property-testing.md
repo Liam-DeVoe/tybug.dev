@@ -106,17 +106,17 @@ Can we do better than sampling test cases uniformly at random? Yes; this section
 
 - [Swarm Testing](https://users.cs.utah.edu/~regehr/papers/swarm12.pdf) and its corresponding blog post [Better Random Testing by Leaving Features Out](https://blog.regehr.org/archives/591) describes how randomly disabling a subset of the features in a program actually increases behavioral diversity and bug-finding power.
 - [Inputs from Hell: Generating Uncommon Inputs from Common Samples](https://arxiv.org/abs/1812.07525) observes that if you have a distribution of inputs over some grammar, you can invert the observed probabilities to generate inputs along rare grammar paths.
-- [Targeted Property-Based Testing](http://proper.softlab.ntua.gr/papers/issta2017.pdf) suggests that an ergonomic form of feedback to the search is to hill-climb toward increasing a developer-specified metric.
+- [Targeted Property-Based Testing](http://proper.softlab.ntua.gr/papers/issta2017.pdf) suggests that an ergonomic form of search feedback is to hill-climb toward increasing a developer-specified metric.
 
 ## Shrinking
 
 Shrinking (also known as minimization or test-case reduction) takes a complex failure and shrinks it to a simpler one. This eases debugging, among other things. Shrinking is an important and sometimes overlooked part of property-based testing.
 
 - [Everything You Ever Wanted To Know About Test-Case Reduction, But Didn’t Know to Ask](https://blog.trailofbits.com/2019/11/11/test-case-reduction/) gives an overview of shrinking and the shrinking literature.
-- [Test-Case Reduction via Test-Case Generation: Insights from the Hypothesis Reducer](https://drmaciver.github.io/papers/reduction-via-generation-preview.pdf) introduces internal shrinking: instead of shrinking the test case, shrink the choices made during the generation of that test case. This internal view avoids several classical challenges of shrinking.
+- [Test-Case Reduction via Test-Case Generation: Insights from the Hypothesis Reducer](https://drmaciver.github.io/papers/reduction-via-generation-preview.pdf) introduces internal shrinking: instead of shrinking the test case, shrink the choices made while generating that test case. This internal view avoids several classical challenges of shrinking.
 - [falsify: Internal Shrinking Reimagined for Haskell](https://well-typed.com/blog/aux/files/falsify.pdf) describes a Hypothesis-inspired internal shrinking algorithm that represents test cases as structured trees. See also [the blog post](https://well-typed.com/blog/2023/04/falsify/) and [the talk](https://www.youtube.com/watch?v=csKkTas6X58) by the same name.
 - [C-Reduce](https://github.com/csmith-project/creduce) is a shrinker for C and C++ programs. See also the paper [Test-Case Reduction for C Compiler Bugs](https://users.cs.utah.edu/~regehr/papers/pldi12-preprint.pdf) and the blog post [Design and Evolution of C-Reduce](https://blog.regehr.org/archives/1678).
-- [Shrinkray](https://github.com/DRMacIver/shrinkray) is a general-purpose shrinker that works over any file format.
+- [Shrinkray](https://github.com/DRMacIver/shrinkray) is a general-purpose shrinker designed to work over any file format.
 - [The Shrinking Challenge](https://github.com/jlink/shrinking-challenge) compares the shrinking performance of property-based testing frameworks on a common benchmark suite.
 - [Notes on Test-Case Reduction](https://drmaciver.com/2019/01/notes-on-test-case-reduction/) is an experience report from the implementation of shrinking. Best read after already familiar with the details of shrinking.
 
@@ -124,7 +124,7 @@ Shrinking (also known as minimization or test-case reduction) takes a complex fa
 
 Not satisfied with automating the generation of test cases through property-based testing, this section explores automating the process of writing property-based tests themselves.
 
-- The [Hypothesis Ghostwriter](https://hypothesis.readthedocs.io/en/latest/reference/integrations.html#ghostwriter) generates a starting point for property-based tests using good old fashed heuristics. See also [this in-browser demo](https://zhd.dev/ghostwriter/).
+- The [Hypothesis Ghostwriter](https://hypothesis.readthedocs.io/en/latest/reference/integrations.html#ghostwriter) generates a starting point for property-based tests using good old fashioned heuristics. See also [this in-browser demo](https://zhd.dev/ghostwriter/).
 - [A Claude Code command for Hypothesis](https://hypothesis.works/articles/claude-code-plugin/) and the related paper [Finding bugs across the Python ecosystem with Claude and property-based testing](https://red.anthropic.com/2026/property-based-testing/) automatically infers property-based tests and generators with LLMs.
 
 ## Tools
@@ -145,7 +145,7 @@ Not satisfied with automating the generation of test cases through property-base
 
 Datasets and research on how developers practically interact with property-based testing.
 
-- [Property-Based Testing in Practice](https://harrisongoldste.in/papers/icse24-pbt-in-practice.pdf) reports qualitative results from interviews of Jane Street developers who use PBT.
+- [Property-Based Testing in Practice](https://harrisongoldste.in/papers/icse24-pbt-in-practice.pdf) explores qualitative reports from interviews of Jane Street developers using PBT.
 - [The Hypothesis Corpus](https://hypothesis.works/articles/hypothesis-corpus/) is a dataset of Hypothesis tests and runtime behavior from open-souce repositories.
 - [RealPBT](https://huggingface.co/blog/maxvonhippel/realpbt) is a dataset of Hypothesis and fast-check tests.
 
