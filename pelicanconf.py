@@ -81,6 +81,7 @@ REDIRECTS = {
     "/2022/10/31/a-quirk-in-super/": "/super-quirk/",
     "/2023/10/31/galois-connections/": "/galois-connections/",
     "/2024/08/27/homebrew-catan/": "/homebrew-catan/",
+    "/swarm-testing/": "/activated-swarm-testing/",
 }
 
 DIRECT_TEMPLATES = ["index", "articles"]
