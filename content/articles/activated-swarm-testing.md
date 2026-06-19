@@ -1,8 +1,8 @@
 ---
-title: Swarm testing
+title: Activated swarm testing
 date: 2026-06-03
 tags: coding
-slug: swarm-testing
+slug: activated-swarm-testing
 figures: true
 ---
 
@@ -282,7 +282,7 @@ figures: true
     }
 </script>
 
-Swarm testing is a technique for increasing behavioral diversity in randomized testing. It's conceptually simple, yet powerful, which makes it a favorite of mine. In this post, I describe a natural extension to swarm testing which yields an additional increase in behavioral diversity.
+Swarm testing is a technique for increasing behavioral diversity in randomized testing. It's conceptually simple, yet powerful, which makes it a favorite of mine. In this post, I introduce a natural extension I call **activated swarm testing**, which yields an additional increase in behavioral diversity.
 
 ## Traditional swarm testing
 
@@ -583,11 +583,11 @@ To give a concrete example of why we might care about this case, suppose our sta
 
 This bug has two conditions: that `push` and `pop` have the right ratio, and that both rules are enabled. It therefore won't be caught by either the original testing strategy (which is unlikely to produce the right ratio) or by the swarm testing strategy (which will fully disable one of the rules).
 
-## A simple extension
+## Activated swarm testing
 
-With this motivating example in mind, I propose a simple extension to swarm testing. Traditionally, each rule is disabled with 50% probability. Instead, I propose that for each test case, each rule $r$ is assigned an activation probability $r_p \in [0, 1]$, sampled uniformly. Then, whenever a rule would normally be run, it is instead skipped with probability $1 - r_p$.
+With this motivating example in mind, I propose a simple extension, called activated swarm testing. Traditionally, each rule is disabled with 50% probability. In activated swarm testing, for each test case, each rule $r$ is instead assigned an activation probability $r_p \in [0, 1]$, sampled uniformly. Then, whenever a rule would normally be run, that run is instead skipped with probability $1 - r_p$.
 
-It might be helpful to play around and see why this algorithm gives us coverage of the previously-rare regions:
+It might be helpful to play around and see why this gives us coverage of the previously-rare regions:
 
 <script>
     Figures.figure(() => {
@@ -964,11 +964,11 @@ Here, you can see that exploration in practice:
     });
 </script>
 
-This testing strategy will easily find both the new `optimize` bug, and our original `push` / `pop` bug. I view it as a straightforward improvement on swarm testing.
+Activated swarm testing will easily find both the new `optimize` bug, and our original `push` / `pop` bug. I view it as a straightforward improvement on swarm testing.
 
 ## One step further
 
-I'll conclude with a teaser. Above, I said the activation probabilities are sampled from a uniform distribution on $[0, 1]$. Let's consider a program with more features; say, 10. Now suppose this program has a bug only in some particular configuration of relative feature probabilities. For example, that some set of three features are half as common as some other set of three. Uniformly sampling the activation probabilities is very unlikely to produce this configuration, and so we will miss this bug.
+I'll conclude with a teaser. Above, I said the activation probabilities are sampled from a uniform distribution on $[0, 1]$. Let's consider a program with more features; say, 10. Now suppose this program has a bug only in some particular configuration of relative feature probabilities. For example, that some specific set of three features are half as common as some other set of three. Uniformly sampling the activation probabilities is very unlikely to produce this configuration, and so we will miss this bug.
 
 We want a distribution of activation probabilities that is likely to produce this configuration. Not only that, we want a distribution of activation probabilities that is also likely to produce any other possible bug-inducing configuration: feature A half as likely as B half as likely as C; A ten times as likely as all other features; feature probabilities distributed according to some power law; and many others besides.
 
