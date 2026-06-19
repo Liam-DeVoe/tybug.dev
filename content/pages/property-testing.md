@@ -6,7 +6,7 @@ page_css_class: pbt
 
 A curated list of property-based testing resources.
 
-This list is intended as a "seminal overview". If one were to read every linked resource, they would be a well-rounded property-based testing expert, with knowledge of all the important ideas.
+This list is intended as a "seminal overview". If one were to start from zero and read every linked resource, they would end as a well-rounded property-based testing expert, with knowledge of all the important ideas.
 
 <div class="pbt__contents">
 <a href="#libraries">Libraries</a>
