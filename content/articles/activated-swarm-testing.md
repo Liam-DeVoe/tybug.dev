@@ -286,6 +286,8 @@ Swarm testing is a technique for increasing behavioral diversity in randomized t
 
 ## Traditional swarm testing
 
+First, let's cover traditional swarm testing.
+
 Consider a stack machine with three instructions (`push`, `pop`, `add`), and the corresponding stateful test[^1]:
 
 [^1]: In pseudocode, because I want to emphasize the behavior before any particular testing framework changes the distribution.
@@ -501,7 +503,7 @@ This testing strategy now explores the previously unlikely state space that cont
 
 ## A problem
 
-Up to this point, I've described traditional swarm testing. And it's great; we get some nice increase in diversity. Specifically, we can explore states which require one rule or more rules to be completely disabled.
+Everything so far has been traditional swarm testing. And it's great; we get some nice increase in diversity. Specifically, we can explore states which require one rule or more rules to be completely disabled.
 
 But, as you may have noticed, some under-explored areas remain[^4]:
 
@@ -542,7 +544,7 @@ But, as you may have noticed, some under-explored areas remain[^4]:
     });
 </script>
 
-The newly-highlighted area corresponds to when Rule<span class="subscript">1</span> is enabled, but substantially less likely than Rule<span class="subscript">2</span>; or vice versa.
+The newly-highlighted area corresponds to when Rule<span class="subscript">1</span> is still enabled, but substantially less likely than Rule<span class="subscript">2</span>; or vice versa.
 
 To give a concrete example of why we might care about this case, suppose our stack machine gains a new `optimize` opcode. When run, `optimize` looks at the execution history of the machine and performs a dynamic JIT-style optimization. Now suppose that `optimize` has a bug only when the execution history is sufficiently long, and there is the right ratio of `pop` calls to `push` calls; say, 5 to 1:
 
@@ -964,7 +966,7 @@ Here, you can see that exploration in practice:
     });
 </script>
 
-Activated swarm testing will easily find both the new `optimize` bug, and our original `push` / `pop` bug. I view it as a straightforward improvement on swarm testing.
+Activated swarm testing easily finds both the new `optimize` bug, and our original `push` / `pop` bug. I view it as a straightforward improvement on swarm testing.
 
 ## One step further
 
@@ -972,7 +974,7 @@ I'll conclude with a teaser. Above, I said the activation probabilities are samp
 
 We want a distribution of activation probabilities that is likely to produce this configuration. Not only that, we want a distribution of activation probabilities that is also likely to produce any other possible bug-inducing configuration: feature A half as likely as B half as likely as C; A ten times as likely as all other features; feature probabilities distributed according to some power law; and many others besides.
 
-This implies the distribution of activation probabilities *should itself be randomly sampled from the space of distributions*.
+This implies the distribution of activation probabilities *should itself be randomly sampled from the space of all distributions*.
 
 It's swarms all the way down.
 
