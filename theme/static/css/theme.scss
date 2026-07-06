@@ -117,6 +117,56 @@ ul, ol {
                 font-weight: 600;
             }
         }
+
+        .nav-more {
+            position: relative;
+            display: inline-block;
+            margin-left: 1.25em;
+
+            &__trigger {
+                color: $color-secondary;
+                cursor: pointer;
+
+                &::after {
+                    content: " ▾";
+                    font-size: 0.8em;
+                }
+
+                &.active {
+                    color: $color-body;
+                    font-weight: 600;
+                }
+            }
+
+            &:hover .nav-more__trigger,
+            &:focus-within .nav-more__trigger {
+                color: $color-accent;
+            }
+
+            &__menu {
+                visibility: hidden;
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 1;
+                padding: 0.5em 0.9em;
+                white-space: nowrap;
+                background: $color-tooltip-background;
+                border: 1px solid $color-tooltip-border;
+                border-radius: 4px;
+
+                a {
+                    display: block;
+                    margin-left: 0;
+                }
+            }
+
+            &:hover .nav-more__menu,
+            &:focus-within .nav-more__menu {
+                visibility: visible;
+            }
+        }
     }
 }
 

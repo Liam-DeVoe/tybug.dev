@@ -36,7 +36,12 @@
       <nav>
         <a href="{{ SITEURL }}/articles/"{% if active_nav == 'articles' %} class="active"{% endif %}>Articles</a>
         <a href="{{ SITEURL }}/thoughts/"{% if active_nav == 'thoughts' %} class="active"{% endif %}>Thoughts</a>
-        <a href="{{ SITEURL }}/chat/"{% if active_nav == 'chat' %} class="active"{% endif %}>Chat</a>
+        <span class="nav-more">
+          <span class="nav-more__trigger{% if active_nav == 'property-testing' %} active{% endif %}" tabindex="0">More</span>
+          <span class="nav-more__menu">
+            <a href="{{ SITEURL }}/property-testing/"{% if active_nav == 'property-testing' %} class="active"{% endif %}>Property testing</a>
+          </span>
+        </span>
         <a href="{{ SITEURL }}/about/"{% if active_nav == 'about' %} class="active"{% endif %}>About</a>
       </nav>
     </div>
