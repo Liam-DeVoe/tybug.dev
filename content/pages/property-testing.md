@@ -155,3 +155,4 @@ Want to read more? Here are some additional lists of resources.
 
 - [Jan Midtgaard's PBT framework list](https://github.com/jmid/pbt-frameworks) contrasts various PBT frameworks.
 - [HypoFuzz's literature review](https://hypofuzz.com/docs/literature.html) focuses more on fuzzing, but may still be valuable.
+- [Ernest Ng's PBT bibliography](https://github.com/ngernest/pbt-bibliography) lists papers in the PBT literature.
