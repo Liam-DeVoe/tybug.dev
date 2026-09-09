@@ -118,11 +118,11 @@ Shrinking (also known as minimization or test-case reduction) takes a complex fa
 - [C-Reduce](https://github.com/csmith-project/creduce) is a shrinker for C and C++ programs. See also the paper [Test-Case Reduction for C Compiler Bugs](https://users.cs.utah.edu/~regehr/papers/pldi12-preprint.pdf) and the blog post [Design and Evolution of C-Reduce](https://blog.regehr.org/archives/1678).
 - [Shrinkray](https://github.com/DRMacIver/shrinkray) is a general-purpose shrinker designed to work over any file format.
 - [The Shrinking Challenge](https://github.com/jlink/shrinking-challenge) compares the shrinking performance of property-based testing frameworks on a common benchmark suite.
-- [Notes on Test-Case Reduction](https://drmaciver.com/2019/01/notes-on-test-case-reduction/) is an experience report from the implementation of shrinking. Best read after already familiar with the details of shrinking.
+- [Notes on Test-Case Reduction](https://drmaciver.com/2019/01/notes-on-test-case-reduction/) is an experience report from implementing a shrinker. Best read after already familiar with the details of shrinking.
 
 ## Test synthesis
 
-Not satisfied with automating the generation of test cases through property-based testing, this section explores automating the process of writing property-based tests themselves.
+Not satisfied with PBT automating the generation of just test cases, this section explores automating writing property-based tests themselves.
 
 - The [Hypothesis Ghostwriter](https://hypothesis.readthedocs.io/en/latest/reference/integrations.html#ghostwriter) generates a starting point for property-based tests using good old fashioned heuristics. See also [this in-browser demo](https://zhd.dev/ghostwriter/).
 - [A Claude Code command for Hypothesis](https://hypothesis.works/articles/claude-code-plugin/) and the related paper [Finding bugs across the Python ecosystem with Claude and property-based testing](https://red.anthropic.com/2026/property-based-testing/) automatically infers property-based tests and generators with LLMs.
@@ -139,7 +139,7 @@ Not satisfied with automating the generation of test cases through property-base
 <!-- - [propverify](https://project-oak.github.io/rust-verification-tools/using-propverify/) -->
 <!-- - [propfuzz](https://github.com/facebookarchive/propfuzz) -->
 
-[^1]: Symbolic and concolic execution tools interpret code executions as an SMT statement, then use an SMT solver to synthesize powerful new test cases.
+[^1]: Symbolic and concolic execution tools interpret code executions as an SMT statement, then use an SMT solver to synthesize new test cases.
 
 ## Empirical results
 
