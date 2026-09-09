@@ -146,7 +146,7 @@ Not satisfied with PBT automating the generation of just test cases, this sectio
 Datasets and research on how developers practically interact with property-based testing.
 
 - [Property-Based Testing in Practice](https://harrisongoldste.in/papers/icse24-pbt-in-practice.pdf) explores qualitative reports from interviews of Jane Street developers using PBT.
-- [The Hypothesis Corpus](https://hypothesis.works/articles/hypothesis-corpus/) is a dataset of Hypothesis tests and runtime behavior from open-souce repositories.
+- [The Hypothesis Corpus](https://hypothesis.works/articles/hypothesis-corpus/) is a dataset of Hypothesis tests and runtime behavior from open-source repositories.
 - [RealPBT](https://huggingface.co/blog/maxvonhippel/realpbt) is a dataset of Hypothesis and fast-check tests.
 
 ## Other lists
