@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {% block description %}{% endblock %}
   <link rel="icon" type="image/png" href="{{ SITEURL }}/favicon.png">
+  <link rel="alternate" type="application/atom+xml" title="{{ SITENAME }}" href="{{ SITEURL }}/{{ FEED_ALL_ATOM }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
   {% assets filters="libsass", output="css/theme.css", depends="css/*.scss", "css/theme.scss" %}
@@ -40,6 +41,7 @@
           <span class="nav-more__trigger{% if active_nav == 'property-testing' %} active{% endif %}" tabindex="0">More</span>
           <span class="nav-more__menu">
             <a href="{{ SITEURL }}/property-testing/"{% if active_nav == 'property-testing' %} class="active"{% endif %}>Property testing</a>
+            <a href="{{ SITEURL }}/{{ FEED_ALL_ATOM }}">RSS feed</a>
           </span>
         </span>
         <a href="{{ SITEURL }}/about/"{% if active_nav == 'about' %} class="active"{% endif %}>About</a>
