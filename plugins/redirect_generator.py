@@ -22,13 +22,12 @@ def generate_redirects(generator, writer):
         # source is like "/2021/07/19/expensive-imports-in-GUIs/"
         # Write an index.html inside that path
         source = source.strip("/")
-        output_path = os.path.join(source, "index.html")
         redirect_html = REDIRECT_TEMPLATE.format(destination=destination)
-
-        path = os.path.join(generator.output_path, output_path)
-        os.makedirs(os.path.dirname(path), exist_ok=True)
-        with open(path, "w", encoding="utf-8") as f:
-            f.write(redirect_html)
+        for output_path in [os.path.join(source, "index.html"), f"{source}.html"]:
+            path = os.path.join(generator.output_path, output_path)
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(redirect_html)
 
 
 def register():
